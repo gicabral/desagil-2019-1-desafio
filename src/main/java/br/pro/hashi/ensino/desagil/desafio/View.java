@@ -18,19 +18,24 @@ public class View extends JPanel {
 
 
     private final Model model;
+  //  private final Image targetImage;
+  //  private final Image humanPlayerImage;
+    //private final Image cpuPlayerImage;
     private final Map<Element, Image> elementsToImages;
 
 
     public View(Model model) {
         this.model = model;
 
-        // Esse jeito de construir um dicionário só pode
-        // ser usado se você não pretende mudá-lo depois.
+       // targetImage = getImage("target.png");
+       // humanPlayerImage = getImage("human-player.png");
+       // cpuPlayerImage = getImage("cpu-player.png");
         elementsToImages = Map.of(
                 model.getTarget(), getImage("target.png"),
                 model.getHumanPlayer(), getImage("human-player.png"),
                 model.getCpuPlayer(), getImage("cpu-player.png")
         );
+
 
         Board board = model.getBoard();
 
@@ -73,6 +78,23 @@ public class View extends JPanel {
             g.drawImage(image, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
         }
 
+        //int row, col;
+
+       // Element target = model.getTarget();
+       // row = target.getRow();
+       // col = target.getCol();
+       // g.drawImage(targetImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+
+       // CpuPlayer cpuPlayer = model.getCpuPlayer();
+       // row = cpuPlayer.getRow();
+       // col = cpuPlayer.getCol();
+       // g.drawImage(cpuPlayerImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+
+       // HumanPlayer humanPlayer = model.getHumanPlayer();
+       // row = humanPlayer.getRow();
+       // col = humanPlayer.getCol();
+       // g.drawImage(humanPlayerImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+
         // Linha necessária para evitar atrasos
         // de renderização em sistemas Linux.
         getToolkit().sync();
@@ -86,3 +108,4 @@ public class View extends JPanel {
         return getToolkit().getImage(url);
     }
 }
+
