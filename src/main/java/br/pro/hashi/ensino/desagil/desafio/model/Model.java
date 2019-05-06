@@ -1,5 +1,7 @@
 package br.pro.hashi.ensino.desagil.desafio.model;
 
+import java.awt.*;
+
 public class Model {
     private final Board board;
     private final Element target;
@@ -42,5 +44,19 @@ public class Model {
 
     public CpuPlayer getCpuPlayer() {
         return cpuPlayer;
+    }
+
+    public void PlayerWinner(){
+        if(getHumanPlayer() == getTarget()) {
+            CpuPlayer.move(0,0);
+            Graphics.drawString("Player Winner");
+        }
+    }
+
+    public void CpuPlayerWinner(){
+        if(getCpuPlayer() == getTarget()) {
+            CpuPlayer.move(0,0);
+            Graphics.drawString("CpuPlayer Winner");
+        }
     }
 }

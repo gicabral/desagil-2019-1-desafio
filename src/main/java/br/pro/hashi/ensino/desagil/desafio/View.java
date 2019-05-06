@@ -39,6 +39,7 @@ public class View extends JPanel {
         int width = board.getNumCols() * CELL_SIZE;
         int height = board.getNumRows() * CELL_SIZE;
 
+
         // Define o tamanho da componente a partir do
         // tamanho do tabuleiro e da constante acima.
         setPreferredSize(new Dimension(width, height));
