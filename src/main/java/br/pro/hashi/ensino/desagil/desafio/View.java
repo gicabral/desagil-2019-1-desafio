@@ -1,5 +1,6 @@
 package br.pro.hashi.ensino.desagil.desafio;
 
+import br.pro.hashi.ensino.desagil.desafio.model.*;
 import br.pro.hashi.ensino.desagil.desafio.model.Board;
 import br.pro.hashi.ensino.desagil.desafio.model.Element;
 import br.pro.hashi.ensino.desagil.desafio.model.Model;
@@ -54,22 +55,24 @@ public class View extends JPanel {
         Board board = model.getBoard();
 
         for (int i = 0; i < board.getNumRows(); i++) {
-            for (int j = 0; j < board.getNumCols(); j++) {
-                if (board.isWall(i, j)) {
-                    g.setColor(Color.BLACK);
-                } else {
-                    g.setColor(Color.WHITE);
+            for (int j = 0; j <  board.getNumCols(); j++) {
+                if (board.isWall(i,j)){
+                    g.setColor(Color.black);
+                }
+                else {
+                    g.setColor(Color.white);
                 }
 
-                g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                g.fillRect(j* CELL_SIZE, i*CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
+
 
         elementsToImages.forEach((element, image) -> {
             int row = element.getRow();
             int col = element.getCol();
 
-            g.drawImage(image, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+            g.drawImage(image, col*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
         });
 
         // Linha necessária para evitar atrasos
