@@ -38,8 +38,23 @@ public class Board {
 
             // Note que aqui não faz sentido usar strip ou split.
             String line = reader.readLine();
+            for (int j = 0; i < numCols; j++) {
+                if(line.charAt(i) == ' ') {
+                    wall[i][j] = false;
+                    break;
+                }
 
-            System.out.println(line);
+                if(line.charAt(i) == '#') {
+                    wall[i][j] = true;
+                    break;
+                }
+
+                else {
+                    System.out.println("O sistema só aceita espaços e #");
+                }
+            }
+
+
         }
 
         reader.close();
