@@ -9,6 +9,7 @@ public class Desafio {
     public static void main(String[] args) throws IOException {
         Model model = new Model();
         View view = new View(model);
+        Controller controller = new Controller(model, view);
 
         // Estrutura básica de um programa Swing.
         SwingUtilities.invokeLater(() -> {
@@ -30,6 +31,9 @@ public class Desafio {
 
             // Exibe a janela.
             frame.setVisible(true);
+
+            Timer timer = new Timer(100, controller);
+            timer.start();
         });
     }
 }

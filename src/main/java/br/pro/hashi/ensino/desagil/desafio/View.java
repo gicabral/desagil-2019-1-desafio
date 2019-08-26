@@ -5,6 +5,7 @@ import br.pro.hashi.ensino.desagil.desafio.model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URL;
+import java.util.Map;
 
 // Estender a classe JPanel e reescrever o método
 // paintComponent é um jeito tradicional de criar
@@ -20,14 +21,18 @@ public class View extends JPanel {
     private final Image targetImage;
     private final Image humanPlayerImage;
     private final Image cpuPlayerImage;
+    private final Map<Element, Image> elementsToImages;
 
 
     public View(Model model) {
         this.model = model;
-
-        targetImage = getImage("target.png");
         humanPlayerImage = getImage("human-player.png");
         cpuPlayerImage = getImage("cpu-player.png");
+        targetImage = getImage("target.png");
+
+        elementsToImages = Map.of(model.getTarget(), getImage("target.png"), model.getCpuPlayer(),
+                getImage("cpu-player.png"), model.getHumanPlayer(), getImage("human-player.png"));
+
 
         Board board = model.getBoard();
 
@@ -44,6 +49,7 @@ public class View extends JPanel {
     // um pincel que desenha o que você mandar ele desenhar. Para saber o que é possível, veja
     // https://docs.oracle.com/en/java/javase/11/docs/api/java.desktop/java/awt/Graphics.html.
     // Você nunca deve chamar esse método diretamente. O certo é chamar o método repaint.
+
     @Override
     public void paintComponent(Graphics g) {
         Board board = model.getBoard();
@@ -60,26 +66,20 @@ public class View extends JPanel {
             }
         }
 
-        int row, col;
 
-        Element target = model.getTarget();
-        row = target.getRow();
-        col = target.getCol();
-        g.drawImage(targetImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+        for (Map.Entry<Element, Image> entry : elementsToImages.entrySet()) {
+            Element element = entry.getKey();
+            int row = element.getRow();
+            int col = element.getCol();
 
-        CpuPlayer cpuPlayer = model.getCpuPlayer();
-        row = cpuPlayer.getRow();
-        col = cpuPlayer.getCol();
-        g.drawImage(cpuPlayerImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+            Image image = entry.getValue();
 
-        HumanPlayer humanPlayer = model.getHumanPlayer();
-        row = humanPlayer.getRow();
-        col = humanPlayer.getCol();
-        g.drawImage(humanPlayerImage, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+            g.drawImage(image, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
 
-        // Linha necessária para evitar atrasos
-        // de renderização em sistemas Linux.
-        getToolkit().sync();
+            // Linha necessária para evitar atrasos
+            // de renderização em sistemas Linux.
+            getToolkit().sync();
+        }
     }
 
 
