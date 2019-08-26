@@ -1,6 +1,9 @@
 package br.pro.hashi.ensino.desagil.desafio;
 
 import br.pro.hashi.ensino.desagil.desafio.model.*;
+import br.pro.hashi.ensino.desagil.desafio.model.Board;
+import br.pro.hashi.ensino.desagil.desafio.model.Element;
+import br.pro.hashi.ensino.desagil.desafio.model.Model;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +35,13 @@ public class View extends JPanel {
 
         elementsToImages = Map.of(model.getTarget(), getImage("target.png"), model.getCpuPlayer(),
                 getImage("cpu-player.png"), model.getHumanPlayer(), getImage("human-player.png"));
-
+        // Esse jeito de construir um dicionário só pode
+        // ser usado se você não pretende mudá-lo depois.
+        elementsToImages = Map.of(
+                model.getTarget(), getImage("target.png"),
+                model.getHumanPlayer(), getImage("human-player.png"),
+                model.getCpuPlayer(), getImage("cpu-player.png")
+        );
 
         Board board = model.getBoard();
 
@@ -55,14 +64,15 @@ public class View extends JPanel {
         Board board = model.getBoard();
 
         for (int i = 0; i < board.getNumRows(); i++) {
-            for (int j = 0; j < board.getNumCols(); j++) {
-                if (board.isWall(i, j)) {
-                    g.setColor(Color.BLACK);
-                } else {
-                    g.setColor(Color.WHITE);
+            for (int j = 0; j <  board.getNumCols(); j++) {
+                if (board.isWall(i,j)){
+                    g.setColor(Color.black);
+                }
+                else {
+                    g.setColor(Color.white);
                 }
 
-                g.fillRect(j * CELL_SIZE, i * CELL_SIZE, CELL_SIZE, CELL_SIZE);
+                g.fillRect(j* CELL_SIZE, i*CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
         }
 
@@ -76,6 +86,12 @@ public class View extends JPanel {
 
             g.drawImage(image, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
 
+        elementsToImages.forEach((element, image) -> {
+            int row = element.getRow();
+            int col = element.getCol();
+
+            g.drawImage(image, col*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+        });
             // Linha necessária para evitar atrasos
             // de renderização em sistemas Linux.
             getToolkit().sync();
