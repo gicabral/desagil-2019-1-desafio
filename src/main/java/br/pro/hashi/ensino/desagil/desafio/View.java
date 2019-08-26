@@ -21,12 +21,20 @@ public class View extends JPanel {
 
 
     private final Model model;
+    private final Image targetImage;
+    private final Image humanPlayerImage;
+    private final Image cpuPlayerImage;
     private final Map<Element, Image> elementsToImages;
 
 
     public View(Model model) {
         this.model = model;
+        humanPlayerImage = getImage("human-player.png");
+        cpuPlayerImage = getImage("cpu-player.png");
+        targetImage = getImage("target.png");
 
+        elementsToImages = Map.of(model.getTarget(), getImage("target.png"), model.getCpuPlayer(),
+                getImage("cpu-player.png"), model.getHumanPlayer(), getImage("human-player.png"));
         // Esse jeito de construir um dicionário só pode
         // ser usado se você não pretende mudá-lo depois.
         elementsToImages = Map.of(
@@ -50,6 +58,7 @@ public class View extends JPanel {
     // um pincel que desenha o que você mandar ele desenhar. Para saber o que é possível, veja
     // https://docs.oracle.com/en/java/javase/11/docs/api/java.desktop/java/awt/Graphics.html.
     // Você nunca deve chamar esse método diretamente. O certo é chamar o método repaint.
+
     @Override
     public void paintComponent(Graphics g) {
         Board board = model.getBoard();
@@ -68,16 +77,25 @@ public class View extends JPanel {
         }
 
 
+        for (Map.Entry<Element, Image> entry : elementsToImages.entrySet()) {
+            Element element = entry.getKey();
+            int row = element.getRow();
+            int col = element.getCol();
+
+            Image image = entry.getValue();
+
+            g.drawImage(image, col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
+
         elementsToImages.forEach((element, image) -> {
             int row = element.getRow();
             int col = element.getCol();
 
             g.drawImage(image, col*CELL_SIZE, row*CELL_SIZE, CELL_SIZE, CELL_SIZE, this);
         });
-
-        // Linha necessária para evitar atrasos
-        // de renderização em sistemas Linux.
-        getToolkit().sync();
+            // Linha necessária para evitar atrasos
+            // de renderização em sistemas Linux.
+            getToolkit().sync();
+        }
     }
 
 

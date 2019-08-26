@@ -35,6 +35,7 @@ public class Desafio {
             // Exibe a janela.
             frame.setVisible(true);
 
+            Timer timer = new Timer(100, controller);
             // Constrói um relógio de 100 milissegundos e adiciona
             // o controlador à lista de observadores desse relógio.
             Timer timer = new Timer(100, controller);
